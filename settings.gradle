@@ -1,0 +1,4 @@
+include ':app', ':sample', ':library', ':lib'
+project(':sample').projectDir = new File('app/libs/android-floating-action-button-master/sample')
+project(':library').projectDir = new File('app/libs/android-floating-action-button-master/library')
+project(':lib').projectDir = new File('app/libs/FloatingActionButton-master/library')

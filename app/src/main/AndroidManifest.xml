@@ -30,6 +30,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SettingsActivityOld"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -44,9 +49,7 @@
             android:label="@string/title_activity_exams"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity
-            android:name=".PreferencesActivity"
-            android:label="@string/title_activity_preferences" >
+        <activity android:name=".SettingsFragment" >
         </activity>
     </application>
 

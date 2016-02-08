@@ -32,7 +32,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.EventObject;
-import java.util.prefs.Preferences;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(examsIntent);
                 break;
             case R.id.nav_settings:
-                Intent settingsIntent = new Intent(this, PreferencesActivity.class);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
                 break;
             case R.id.nav_help:
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Wird aufgerufen, wenn der login-button gedruckt wird
      */
-    public void loginPost(View view, String username, String password) {
+    public void loginPost(String username, String password) {
         clearTableLayout();
         writeToFile("uname", username);
         writeToFile("pwd", password);
@@ -583,7 +582,7 @@ public class MainActivity extends AppCompatActivity
             return;
         } else if (savedVersionCode == DOESNT_EXIST) {
             //This is a new install
-            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            Intent settingsIntent = new Intent(this, SettingsActivityOld.class);
             startActivity(settingsIntent);
         } else if (currentVersionCode > savedVersionCode) {
             // TODO This is an upgrade

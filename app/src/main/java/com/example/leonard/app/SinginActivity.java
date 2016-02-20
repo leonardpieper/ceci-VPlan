@@ -198,8 +198,8 @@ public class SinginActivity extends AsyncTask<String, Void, String> {
 
         /** TODO maybe preference to default year */
         MainActivity.theActivity.clearTableLayout();
-        MainActivity.theActivity.loadVPlan(0, false);
-        MainActivity.theActivity.loadVPlan(0 + 3, false);
+        MainActivity.theActivity.loadVPlan(MainActivity.theActivity.getDefaultYear(), true);
+        MainActivity.theActivity.loadVPlan(MainActivity.theActivity.getDefaultYear() + 3, true);
 
         super.onPostExecute(result);
 

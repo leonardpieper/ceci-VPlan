@@ -757,5 +757,6 @@ public class MainActivity extends AppCompatActivity
     public static Context getAppContext(){
         return MainActivity.getAppContext();
     }
+    public int getDefaultYear(){return defaultYear;}
 
 }

@@ -24,7 +24,7 @@
         </PreferenceScreen>
         <ListPreference
             android:title="Jahrgang"
-            android:summary="Standard Jahrgang"
+            android:summary="Dein Jahrgang"
             android:key="prefYear"
             android:entries="@array/defaultYears"
             android:entryValues="@array/defaultYears">
@@ -60,6 +60,10 @@
                 android:key="prefDays">
             </Preference>
         </PreferenceScreen>
+        <Preference
+            android:title="Alle Fächer entfernen"
+            android:key="prefDel">
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory

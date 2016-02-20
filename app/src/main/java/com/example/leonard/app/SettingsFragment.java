@@ -7,8 +7,10 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import static com.example.leonard.app.R.xml.preferences;
 
@@ -39,6 +41,18 @@ public class SettingsFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 DialogFragment dialogFragment = new SetLessonsDayDialog();
                 dialogFragment.show(getFragmentManager(), "SetLessonsDayDialog");
+                return true;
+            }
+        });
+        Preference delButton = (Preference)findPreference("prefDel");
+        delButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                MainActivity.theActivity.deleteStorageFile("kurskrzl");
+                Snackbar snackbar = Snackbar.make(getView(), "Alle Fächer gelöscht", Snackbar.LENGTH_SHORT);
+                snackbar.show();
+//                Toast toast = Toast.makeText(MainActivity.getAppContext(), "Alle Fächer gelöscht", Toast.LENGTH_SHORT);
+//                toast.show();
                 return true;
             }
         });

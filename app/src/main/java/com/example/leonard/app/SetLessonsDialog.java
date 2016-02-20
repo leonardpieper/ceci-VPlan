@@ -84,10 +84,10 @@ public class SetLessonsDialog extends DialogFragment{
                         String teacher = sharedPref.getString("prefTeacher", "");
 
                         //Delete sharedpref (Entries in the Settingsscreen)
-                        sharedPref.edit().remove("prefLesson").commit();
-                        sharedPref.edit().remove("prefShortcut").commit();
-                        sharedPref.edit().remove("prefId").commit();
-                        sharedPref.edit().remove("prefTeacher").commit();
+                        sharedPref.edit().remove("prefLesson").apply();
+                        sharedPref.edit().remove("prefShortcut").apply();
+                        sharedPref.edit().remove("prefId").apply();
+                        sharedPref.edit().remove("prefTeacher").apply();
 
 //                        ArrayList days = SetLessonsDayDialog.mSelectedItems;
 //                        System.out.println(daysHours.toString());

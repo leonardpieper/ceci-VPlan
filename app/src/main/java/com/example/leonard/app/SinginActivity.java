@@ -196,9 +196,10 @@ public class SinginActivity extends AsyncTask<String, Void, String> {
             progressDialog.dismiss();
         }
 
+        /** TODO maybe preference to default year */
         MainActivity.theActivity.clearTableLayout();
-        MainActivity.theActivity.loadVPlan(0);
-        MainActivity.theActivity.loadVPlan(0 + 3);
+        MainActivity.theActivity.loadVPlan(0, false);
+        MainActivity.theActivity.loadVPlan(0 + 3, false);
 
         super.onPostExecute(result);
 

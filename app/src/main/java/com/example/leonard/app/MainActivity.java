@@ -28,10 +28,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EventObject;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     private com.getbase.floatingactionbutton.FloatingActionButton fabEF;
     private com.getbase.floatingactionbutton.FloatingActionButton fabQ1;
     private com.getbase.floatingactionbutton.FloatingActionButton fabQ2;
+    private com.getbase.floatingactionbutton.FloatingActionButton fabPersonal;
     private com.getbase.floatingactionbutton.FloatingActionsMenu fabMenu;
 
     public static MainActivity theActivity;
@@ -86,6 +93,8 @@ public class MainActivity extends AppCompatActivity
         fabEF = (com.getbase.floatingactionbutton.FloatingActionButton)findViewById(R.id.fabEF);
         fabQ1 = (com.getbase.floatingactionbutton.FloatingActionButton)findViewById(R.id.fabQ1);
         fabQ2 = (com.getbase.floatingactionbutton.FloatingActionButton)findViewById(R.id.fabQ2);
+        fabPersonal = (com.getbase.floatingactionbutton.FloatingActionButton)findViewById(R.id.fabPersonal);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -100,10 +109,11 @@ public class MainActivity extends AppCompatActivity
             defaultYear = 0;
         }
 
+        /** TODO defaultyear maybe load peronal on default */
         clearTableLayout();
-        loadVPlan(defaultYear);
-        loadVPlan(defaultYear + 3);
-        changeFabColor(defaultYear);
+        loadVPlan(defaultYear, true);
+        loadVPlan(defaultYear + 3, true);
+        changeFabColor(3);
     }
 
     @Override
@@ -285,9 +295,10 @@ public class MainActivity extends AppCompatActivity
         signin.execute(username, password);
     }
 
-    protected void loadVPlan(int year) {
+    protected void loadVPlan(int year, boolean personal) {
         String vPlan = readFromFile("vertretungsplan.json");
         String analyzedJSON = new String();
+
         if (vPlan != null) {
             try {
                 JSONObject mainObject = new JSONObject(vPlan);
@@ -314,7 +325,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 JSONArray stufe = mainObject.getJSONArray(jahrgang);
 //                    analyzedJSON = analyzeJSON(stufe, i, 0);
-                analyzeJSON(stufe, year, 0);
+                analyzeJSON(stufe, year, personal);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -325,24 +336,31 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
             case (R.id.fabEF):
                 clearTableLayout();
-                loadVPlan(0);
-                loadVPlan(3);
+                loadVPlan(0, false);
+                loadVPlan(3, false);
                 setTitle(getResources().getString(R.string.title_activity_main) + " - EF");
                 changeFabColor(0);
                 break;
             case (R.id.fabQ1):
                 clearTableLayout();
-                loadVPlan(1);
-                loadVPlan(4);
+                loadVPlan(1, false);
+                loadVPlan(4, false);
                 setTitle(getResources().getString(R.string.title_activity_main) + " - Q1");
                 changeFabColor(1);
                 break;
             case (R.id.fabQ2):
                 clearTableLayout();
-                loadVPlan(2);
-                loadVPlan(5);
+                loadVPlan(2, false);
+                loadVPlan(5, false);
                 setTitle(getResources().getString(R.string.title_activity_main) + " - Q2");
                 changeFabColor(2);
+                break;
+            case (R.id.fabPersonal):
+                clearTableLayout();
+                loadVPlan(defaultYear, true);
+                loadVPlan(defaultYear+3, true);
+                setTitle("Mein " + getResources().getString(R.string.title_activity_main));
+                changeFabColor(3);
                 break;
         }
     }
@@ -350,19 +368,28 @@ public class MainActivity extends AppCompatActivity
     private void changeFabColor(int stufe){
         switch (stufe){
             case 0:
+                fabPersonal.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 fabEF.setColorNormal(getResources().getColor(R.color.colorAccent));
                 fabQ1.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 fabQ2.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 break;
             case 1:
+                fabPersonal.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 fabEF.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 fabQ1.setColorNormal(getResources().getColor(R.color.colorAccent));
                 fabQ2.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 break;
             case 2:
+                fabPersonal.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 fabEF.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 fabQ1.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 fabQ2.setColorNormal(getResources().getColor(R.color.colorAccent));
+                break;
+            case 3:
+                fabPersonal.setColorNormal(getResources().getColor(R.color.colorAccent));
+                fabEF.setColorNormal(getResources().getColor(R.color.colorPrimary));
+                fabQ1.setColorNormal(getResources().getColor(R.color.colorPrimary));
+                fabQ2.setColorNormal(getResources().getColor(R.color.colorPrimary));
                 break;
         }
         fabMenu.collapse();
@@ -478,7 +505,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    protected String analyzeJSON(JSONArray jsonArray, int year, int data) {
+    protected String analyzeJSON(JSONArray jsonArray, int year, boolean personal) {
         String output = new String();
         try {
 
@@ -490,20 +517,29 @@ public class MainActivity extends AppCompatActivity
                 JSONObject inhalt = jsonArray.getJSONObject(j);
 
                 String currentKlassen = inhalt.getString("Klasse(n)");
-                if (currentKlassen.startsWith("Klausur") && !currentKlassen.equals(oldKlassen))
-                {
+                if (currentKlassen.startsWith("Klausur") && !currentKlassen.equals(oldKlassen)) {
                     macheEineZeile("Klausuren:");
                     oldKlassen = currentKlassen;
                 }
-                vertretungTable(year,
-                        inhalt.getString("Fach"),
-                        inhalt.getString("Stunde"),
-                        inhalt.getString("Vertreter"),
-                        inhalt.getString("Raum"),
-                        inhalt.getString("Vertretungs-Text"),
-                        inhalt.getString("Tag"),
-                        inhalt.getString("Datum"));
-
+                if(personal == false) {
+                    vertretungTable(year,
+                            inhalt.getString("Fach"),
+                            inhalt.getString("Stunde"),
+                            inhalt.getString("Vertreter"),
+                            inhalt.getString("Raum"),
+                            inhalt.getString("Vertretungs-Text"),
+                            inhalt.getString("Tag"),
+                            inhalt.getString("Datum"));
+                }else {
+                    loadPersonalVPlan(year,
+                            inhalt.getString("Fach"),
+                            inhalt.getString("Stunde"),
+                            inhalt.getString("Vertreter"),
+                            inhalt.getString("Raum"),
+                            inhalt.getString("Vertretungs-Text"),
+                            inhalt.getString("Tag"),
+                            inhalt.getString("Datum"));
+                }
 
                 //String tag = stufe.getJSONObject("tag")
             }
@@ -512,6 +548,109 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         return output;
+    }
+
+    private void loadPersonalVPlan(int year, String fach, String stunde, String lehrer, String raum, String vertretungsText, String tag, String datum){
+        String rawKurskrzl = readFromFile("kurskrzl");
+        if(rawKurskrzl != null) {
+            String[] aryKurskrzl = rawKurskrzl.split("#");
+            for (int i = 0; i < aryKurskrzl.length; i++) {
+                String kurskrzl = aryKurskrzl[i];
+                if (kurskrzl.toLowerCase().equals(fach.toLowerCase())) {
+
+                    TableRow row = new TableRow(this);
+
+
+                    TextView lesson = new TextView(this);
+                    lesson.setBackgroundResource(R.drawable.cell_shape);
+                    lesson.setPadding(5, 15, 15, 15);
+                    TextView time = new TextView(this);
+                    time.setBackgroundResource(R.drawable.cell_shape);
+                    time.setPadding(15, 15, 15, 15);
+                    TextView tutor = new TextView(this);
+                    tutor.setBackgroundResource(R.drawable.cell_shape);
+                    tutor.setPadding(15, 15, 15, 15);
+                    TextView room = new TextView(this);
+                    room.setBackgroundResource(R.drawable.cell_shape);
+                    room.setPadding(15, 15, 15, 15);
+                    TextView extra = new TextView(this);
+                    extra.setBackgroundResource(R.drawable.cell_shape);
+                    extra.setPadding(15, 15, 5, 15);
+                    TextView tests = new TextView(this);
+                    tests.setBackgroundResource(R.drawable.cell_shape);
+                    tests.setPadding(15, 15, 5, 15);
+
+                    TextView day = new TextView(this);
+                    //day.setBackgroundResource(R.drawable.cell_shape);
+                    day.setPadding(15, 15, 5, 15);
+                    day.setTextSize(20);
+
+                    TextView date = new TextView(this);
+                    //date.setBackgroundResource(R.drawable.cell_shape);
+                    date.setPadding(15, 15, 5, 15);
+                    date.setTextSize(20);
+
+
+                    android.widget.TableRow.LayoutParams trparams = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                            android.widget.TableRow.LayoutParams.WRAP_CONTENT);
+
+                    TableRow.LayoutParams oneColParam = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                            android.widget.TableRow.LayoutParams.WRAP_CONTENT);
+                    oneColParam.span = 1;
+                    TableRow.LayoutParams twoColParam = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                            android.widget.TableRow.LayoutParams.WRAP_CONTENT);
+                    twoColParam.span = 2;
+                    TableRow.LayoutParams threeColParam = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                            android.widget.TableRow.LayoutParams.WRAP_CONTENT);
+                    threeColParam.span = 3;
+
+                    lesson.setLayoutParams(trparams);
+                    time.setLayoutParams(trparams);
+                    tutor.setLayoutParams(trparams);
+                    room.setLayoutParams(trparams);
+                    extra.setLayoutParams(trparams);
+                    day.setLayoutParams(twoColParam);
+                    date.setLayoutParams(threeColParam);
+                    tests.setLayoutParams(oneColParam);
+
+                    lesson.setText(fach);
+                    time.setText(stunde);
+                    tutor.setText(lehrer);
+                    room.setText(raum);
+                    extra.setText(vertretungsText);
+                    day.setText(tag);
+                    date.setText(datum);
+                    tests.setText(fach);
+//        TableLayout layoutINNER = new TableLayout(this);
+//        layoutINNER.setLayoutParams(params);
+//        TableRow tr = new TableRow(this);
+
+//        tr.setLayoutParams(params);
+                    if (oldDatum.equals(datum)) {
+                        row.addView(lesson);
+                        row.addView(time);
+                        row.addView(tutor);
+                        row.addView(room);
+                        row.addView(extra);
+                    } else if (!tag.equals("Tag")) {
+                        row.addView(day);
+                        row.addView(date);
+                        tableLayout.addView(row);
+                        row = new TableRow(this);
+                        row.addView(lesson);
+                        row.addView(time);
+                        row.addView(tutor);
+                        row.addView(room);
+                        row.addView(extra);
+                    }
+
+                    tableLayout.addView(row);
+                    oldDatum = datum;
+                }
+
+            }
+        }
+
     }
 
     private void macheEineZeile(String text){
@@ -553,8 +692,24 @@ public class MainActivity extends AppCompatActivity
             streamReader.close();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
         return readData.toString();
+    }
+
+    protected void appendToFile(String filename, String data){
+        String oldFile = readFromFile(filename);
+        if(oldFile==null){
+            writeToFile(filename, data);
+        }else {
+            writeToFile(filename, oldFile + "#" + data);
+        }
+    }
+
+    protected void deleteStorageFile(String filename){
+        File dir = getFilesDir();
+        File file = new File(dir, filename);
+        boolean deleted = file.delete();
     }
 
     private void checkFirstRun() {
@@ -597,6 +752,10 @@ public class MainActivity extends AppCompatActivity
         } else {
             return false;
         }
+    }
+
+    public static Context getAppContext(){
+        return MainActivity.getAppContext();
     }
 
 }

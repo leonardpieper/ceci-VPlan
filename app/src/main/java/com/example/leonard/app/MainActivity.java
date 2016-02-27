@@ -1,10 +1,17 @@
 package com.example.leonard.app;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,6 +25,7 @@ import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,16 +39,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EventObject;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private PendingIntent mEverydayPendingIntent;
 
     private SinginActivity signin;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -77,6 +84,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onRefresh() {
                 refreshData();
+//                notification();
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
@@ -109,10 +117,13 @@ public class MainActivity extends AppCompatActivity
             defaultYear = 0;
         }
 
-        /** TODO defaultyear maybe load peronal on default */
+        setAlarmSchedule();
+
+        boolean personal = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("prefPersonal", true);
+
         clearTableLayout();
-        loadVPlan(defaultYear, true);
-        loadVPlan(defaultYear + 3, true);
+        loadVPlan(defaultYear, personal);
+        loadVPlan(defaultYear + 3, personal);
         changeFabColor(3);
     }
 
@@ -358,8 +369,8 @@ public class MainActivity extends AppCompatActivity
             case (R.id.fabPersonal):
                 clearTableLayout();
                 loadVPlan(defaultYear, true);
-                loadVPlan(defaultYear+3, true);
-                setTitle("Mein " + getResources().getString(R.string.title_activity_main));
+                loadVPlan(defaultYear + 3, true);
+                setTitle("Dein " + getResources().getString(R.string.title_activity_main));
                 changeFabColor(3);
                 break;
         }
@@ -712,6 +723,32 @@ public class MainActivity extends AppCompatActivity
         boolean deleted = file.delete();
     }
 
+    protected void setAlarmSchedule(){
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("prefTurnOfMsg", true)) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            Intent alarmIntent = new Intent(this, NotifyReceiver.class);
+            alarmIntent.putExtra("notification", true);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+            int hourOfDay = sharedPref.getInt("prefNotifyHourOfDay", 7);
+            int minute = sharedPref.getInt("prefNotifyMinute", 00);
+
+            Calendar calendar = Calendar.getInstance();
+            Calendar now = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND, 00);
+
+            if (calendar.before(now)) {
+                calendar.add(Calendar.DATE, 1);
+            }
+            mEverydayPendingIntent = pendingIntent;
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, mEverydayPendingIntent);
+        }
+
+    }
+
     private void checkFirstRun() {
 
         final String PREFS_NAME = "MyPrefsFile";
@@ -737,8 +774,8 @@ public class MainActivity extends AppCompatActivity
             return;
         } else if (savedVersionCode == DOESNT_EXIST) {
             //This is a new install
-            Intent settingsIntent = new Intent(this, SettingsActivityOld.class);
-            startActivity(settingsIntent);
+            Intent firstIntent = new Intent(this, FirstStartActivity.class);
+            startActivity(firstIntent);
         } else if (currentVersionCode > savedVersionCode) {
             // TODO This is an upgrade
         }
@@ -747,7 +784,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean isDefaultYearAvailable() {
-        if (readFromFile("defaultyear") != "") {
+        if (readFromFile("defaultyear") != null) {
+            System.out.println(readFromFile("defaultyear"));
             return true;
         } else {
             return false;

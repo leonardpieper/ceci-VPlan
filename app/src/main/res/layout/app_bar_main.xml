@@ -45,7 +45,7 @@
             fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_size="normal"
             fab:fab_icon="@drawable/ic_q2"
-            fab:fab_colorPressed="@color/colorPrimary"/>
+            fab:fab_colorPressed="@color/colorPrimaryDark"/>
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_size="normal"
             fab:fab_icon="@drawable/ic_q1"
-            fab:fab_colorPressed="@color/colorPrimary"/>
+            fab:fab_colorPressed="@color/colorPrimaryDark"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_size="normal"
             fab:fab_icon="@drawable/ic_ef"
-            fab:fab_colorPressed="@color/colorPrimary"/>
+            fab:fab_colorPressed="@color/colorPrimaryDark"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
             fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_size="normal"
             fab:fab_icon="@drawable/ic_person"
-            fab:fab_colorPressed="@color/colorPrimary"/>
+            fab:fab_colorPressed="@color/colorPrimaryDark"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

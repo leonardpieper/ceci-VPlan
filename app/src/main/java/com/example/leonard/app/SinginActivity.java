@@ -3,6 +3,7 @@ package com.example.leonard.app;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -197,9 +198,11 @@ public class SinginActivity extends AsyncTask<String, Void, String> {
         }
 
         /** TODO maybe preference to default year */
+
+        boolean personal = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("prefPersonal", true);
         MainActivity.theActivity.clearTableLayout();
-        MainActivity.theActivity.loadVPlan(MainActivity.theActivity.getDefaultYear(), true);
-        MainActivity.theActivity.loadVPlan(MainActivity.theActivity.getDefaultYear() + 3, true);
+        MainActivity.theActivity.loadVPlan(MainActivity.theActivity.getDefaultYear(), personal);
+        MainActivity.theActivity.loadVPlan(MainActivity.theActivity.getDefaultYear() + 3, personal);
 
         super.onPostExecute(result);
 

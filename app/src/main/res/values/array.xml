@@ -5,4 +5,7 @@
         <item>"Q1"</item>
         <item>"Q2"</item>
     </string-array>
+    <string-array name="noClasses">
+        <item>"Keine Fächer vorhanden"</item>
+    </string-array>
 </resources>

@@ -29,6 +29,12 @@
             android:entries="@array/defaultYears"
             android:entryValues="@array/defaultYears">
         </ListPreference>
+        <SwitchPreference
+            android:title="Personalisierter Vertretungsplan"
+            android:summary="Hinweis: Hierfür musst du deine Kurse hinzufügen"
+            android:key="prefPersonal"
+            android:defaultValue="true">
+        </SwitchPreference>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -67,14 +73,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Eine Gruppe" >
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="prefSendReport"
-            android:summary="A simple Checkbox"
-            android:title="Checkbox" >
-        </CheckBoxPreference>
-
+        android:title="Benachrichtugungen">
+        <SwitchPreference
+            android:title="Benachrichtigungen"
+            android:defaultValue="true"
+            android:key="prefTurnOfMsg">
+        </SwitchPreference>
+        <Preference
+            android:title="Uhrzeit"
+            android:key="prefTime"
+            android:dependency="prefTurnOfMsg">
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

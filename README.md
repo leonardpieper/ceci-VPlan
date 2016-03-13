@@ -7,6 +7,7 @@ Android Smartphone mit mindestens Android 4.0.3
 * Benötigt nur eine Internetverbindung, wenn du aktualisierst
 * Füge Fächer hinzu und du bekommst nur das angezeigt, was dich interessiert
 * Bekomme täglich Benachrichtigungen über deine geänderten/entfallenen Stunden
+
 ##Lizenz
 Die App steht unter der GNU GPLv3 Lizenz.
 Nutzung, Verbreitung, Veröffentlichung und Veränderung nur unter den Bedingung dieser Lizenz!

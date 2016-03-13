@@ -15,7 +15,8 @@ Nutzung, Verbreitung, Veröffentlichung und Veränderung nur unter den Bedingung
 ##Credits
 FloatingActionButton by Clan under *MIT license* [https://github.com/Clans/FloatingActionButton](https://github.com/Clans/FloatingActionButton)
 
-jsoup by Jonathan Hedley under *Apache License, Version 2.0* [http://jsoup.org/](http://jsoup.org/)
+jsoup by Jonathan Hedley under *Apache License, Version 2.0*
+[http://jsoup.org/](http://jsoup.org/)
 
 ---------------------------
 ## Ceci Vertretungsplan [EN]
@@ -28,4 +29,5 @@ Feel free to use it under the terms of the GNU GPLv3 Licence.
 ##Credits
 FloatingActionButton by Clan under *MIT license* [https://github.com/Clans/FloatingActionButton](https://github.com/Clans/FloatingActionButton)
 
-jsoup by Jonathan Hedley under *Apache License, Version 2.0* [http://jsoup.org/](http://jsoup.org/)
+jsoup by Jonathan Hedley under *Apache License, Version 2.0*
+[http://jsoup.org/](http://jsoup.org/)

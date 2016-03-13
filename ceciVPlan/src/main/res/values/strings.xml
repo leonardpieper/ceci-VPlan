@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Ceci Vertretungsplan</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    
+    <string name="title_activity_main">Vertretungsplan</string>
+    <string name="title_activity_exams">ExamsActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+
+    <string name="settings_login">Login</string>
+    <string name="settings_default_year">Standard Jahrgang</string>
+    <string name="settings_set_day">Fach hinzufügen</string>
+
+    <string name="sld_title">Zeiten</string>
+    <string name="title_activity_preferences">Settings</string>
+
+    <string name="preference_file_key">com.example.leonard.app.PREFERENCE_FILE_KEY</string>
+
+</resources>
+

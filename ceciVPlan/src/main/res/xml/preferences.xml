@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:title="Anmeldung" >
+        <PreferenceScreen
+            android:title="Login"
+            android:summary="Login mit den Anmeldedaten des Online-Vertretungsplans"
+            android:key="prefLoginScreen">
+            <EditTextPreference
+                android:title="Benutzername"
+                android:key="prefUname">
+            </EditTextPreference>
+            <EditTextPreference
+                android:title="Passwort"
+                android:inputType="textPassword"
+                android:key="prefPwd">
+            </EditTextPreference>
+            <Preference
+                android:title="Login"
+                android:summary="Anmeldung bestätigen"
+                android:key="prefLogin">
+            </Preference>
+        </PreferenceScreen>
+        <ListPreference
+            android:title="Jahrgang"
+            android:summary="Dein Jahrgang"
+            android:key="prefYear"
+            android:entries="@array/defaultYears"
+            android:entryValues="@array/defaultYears">
+        </ListPreference>
+        <SwitchPreference
+            android:title="Personalisierter Vertretungsplan"
+            android:summary="Hinweis: Hierfür musst du deine Kurse hinzufügen"
+            android:key="prefPersonal"
+            android:defaultValue="true">
+        </SwitchPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Fächer">
+        <PreferenceScreen
+            android:title="Fach hinzufügen">
+            <!--<EditTextPreference-->
+                <!--android:title="Fachname"-->
+                <!--android:key="prefLesson"-->
+                <!--android:summary="Bsp. Deutsch">-->
+            <!--</EditTextPreference>-->
+            <!--<EditTextPreference-->
+                <!--android:title="Fachkürzel"-->
+                <!--android:key="prefShortcut"-->
+                <!--android:maxLength="5"-->
+                <!--android:summary="Bsp. Deu">-->
+            <!--</EditTextPreference>-->
+            <EditTextPreference
+                android:title="Kurskürzel"
+                android:key="prefId"
+                android:summary="Bsp. Er EF.5 \nWenn dies nicht richtig geschrieben ist funktioniert der personalisierte VPlan nicht!">
+            </EditTextPreference>
+            <!--Nur solange es keinen Stundenplan gibt!-->
+            <Preference
+                android:title="Bestätigen"
+                android:key="prefSubmit"
+                android:summary="Fügt das Fach zu deinem persönlichen Vertretungsplan hinzu.">
+            </Preference>
+            <!--<EditTextPreference-->
+                <!--android:title="Lehrer"-->
+                <!--android:key="prefTeacher"-->
+                <!--android:visibility="gone">-->
+            <!--</EditTextPreference>-->
+            <!--<Preference-->
+                <!--android:title="Tage"-->
+                <!--android:key="prefDays">-->
+            <!--</Preference>-->
+        </PreferenceScreen>
+        <Preference
+            android:title="Alle Fächer entfernen"
+            android:key="prefDel">
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Benachrichtugungen">
+        <SwitchPreference
+            android:title="Benachrichtigungen"
+            android:defaultValue="true"
+            android:key="prefTurnOfMsg">
+        </SwitchPreference>
+        <Preference
+            android:title="Uhrzeit"
+            android:key="prefTime"
+            android:dependency="prefTurnOfMsg">
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

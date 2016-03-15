@@ -41,37 +41,36 @@
         android:title="Fächer">
         <PreferenceScreen
             android:title="Fach hinzufügen">
-            <!--<EditTextPreference-->
-                <!--android:title="Fachname"-->
-                <!--android:key="prefLesson"-->
-                <!--android:summary="Bsp. Deutsch">-->
-            <!--</EditTextPreference>-->
-            <!--<EditTextPreference-->
-                <!--android:title="Fachkürzel"-->
-                <!--android:key="prefShortcut"-->
-                <!--android:maxLength="5"-->
-                <!--android:summary="Bsp. Deu">-->
-            <!--</EditTextPreference>-->
+            <EditTextPreference
+                android:title="Fachname"
+                android:key="prefLesson"
+                android:summary="Bsp. Deutsch">
+            </EditTextPreference>
+            <EditTextPreference
+                android:title="Fachkürzel"
+                android:key="prefShortcut"
+                android:maxLength="5"
+                android:summary="Bsp. Deu">
+            </EditTextPreference>
             <EditTextPreference
                 android:title="Kurskürzel"
                 android:key="prefId"
                 android:summary="Bsp. Er EF.5 \nWenn dies nicht richtig geschrieben ist funktioniert der personalisierte VPlan nicht!">
             </EditTextPreference>
             <!--Nur solange es keinen Stundenplan gibt!-->
-            <Preference
-                android:title="Bestätigen"
-                android:key="prefSubmit"
-                android:summary="Fügt das Fach zu deinem persönlichen Vertretungsplan hinzu.">
-            </Preference>
-            <!--<EditTextPreference-->
-                <!--android:title="Lehrer"-->
-                <!--android:key="prefTeacher"-->
-                <!--android:visibility="gone">-->
-            <!--</EditTextPreference>-->
             <!--<Preference-->
-                <!--android:title="Tage"-->
-                <!--android:key="prefDays">-->
+                <!--android:title="Bestätigen"-->
+                <!--android:key="prefSubmit"-->
+                <!--android:summary="Fügt das Fach zu deinem persönlichen Vertretungsplan hinzu.">-->
             <!--</Preference>-->
+            <EditTextPreference
+                android:title="Lehrer"
+                android:key="prefTeacher">
+            </EditTextPreference>
+            <Preference
+                android:title="Tage"
+                android:key="prefDays">
+            </Preference>
         </PreferenceScreen>
         <Preference
             android:title="Alle Fächer entfernen"

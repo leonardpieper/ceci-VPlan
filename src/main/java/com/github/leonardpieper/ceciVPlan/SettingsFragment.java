@@ -55,39 +55,39 @@ public class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
-        //Button um den Dialog für Tage und Zeiten zu starten
-//        Preference daysButton = (Preference)findPreference("prefDays");
-//        daysButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//            @Override
-//            public boolean onPreferenceClick(Preference preference) {
-//                DialogFragment dialogFragment = new SetLessonsDayDialog();
-//                dialogFragment.show(getFragmentManager(), "SetLessonsDayDialog");
-//                return true;
-//            }
-//        });
-
-        Preference subButton = (Preference)findPreference("prefSubmit");
-        subButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//        Button um den Dialog für Tage und Zeiten zu starten
+        Preference daysButton = (Preference)findPreference("prefDays");
+        daysButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                String id = sharedPref.getString("prefId", "");
-                sharedPref.edit().remove("prefId").apply();
-
-                ArrayList<String> detaills = new ArrayList<String>();
-                detaills.add("Wochentag");
-                detaills.add("Stunde 1");
-                detaills.add("Stunde 2");
-                detaills.add("Stunde 3");
-                detaills.add("Raum");
-
-                AddNewLesson.addTheLesson(null, null, id, null, detaills);
-
-                Toast toast = Toast.makeText(getActivity(), "Fach hinzugefügt", Toast.LENGTH_SHORT);
-                toast.show();
+                DialogFragment dialogFragment = new SetLessonsDayDialog();
+                dialogFragment.show(getFragmentManager(), "SetLessonsDayDialog");
                 return true;
             }
         });
+
+//        Preference subButton = (Preference)findPreference("prefSubmit");
+//        subButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//                String id = sharedPref.getString("prefId", "");
+//                sharedPref.edit().remove("prefId").apply();
+//
+//                ArrayList<String> detaills = new ArrayList<String>();
+//                detaills.add("Wochentag");
+//                detaills.add("Stunde 1");
+//                detaills.add("Stunde 2");
+//                detaills.add("Stunde 3");
+//                detaills.add("Raum");
+//
+//                AddNewLesson.addTheLesson(null, null, id, null, detaills);
+//
+//                Toast toast = Toast.makeText(getActivity(), "Fach hinzugefügt", Toast.LENGTH_SHORT);
+//                toast.show();
+//                return true;
+//            }
+//        });
 
         Preference delButton = (Preference)findPreference("prefDel");
         delButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

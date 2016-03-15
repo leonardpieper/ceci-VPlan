@@ -175,6 +175,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_vplan:
                 break;
             case R.id.nav_schedule:
+                Intent scheduleIntent = new Intent(this, TimetableActivity.class);
+                startActivity(scheduleIntent);
                 break;
             case R.id.nav_test:
                 Intent examsIntent = new Intent(this, ExamsActivity.class);

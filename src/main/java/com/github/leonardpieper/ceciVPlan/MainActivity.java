@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.leonard.ceciVPlan.R;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -175,7 +174,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_vplan:
                 break;
             case R.id.nav_schedule:
-                Intent scheduleIntent = new Intent(this, TimetableActivity.class);
+                Intent scheduleIntent = new Intent(this, TimeTableActivity.class);
                 startActivity(scheduleIntent);
                 break;
             case R.id.nav_test:

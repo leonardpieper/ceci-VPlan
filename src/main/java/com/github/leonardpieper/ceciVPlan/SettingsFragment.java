@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.ListPreference;
@@ -56,7 +57,7 @@ public class SettingsFragment extends PreferenceFragment {
             }
         });
 //        Button um den Dialog für Tage und Zeiten zu starten
-        Preference daysButton = (Preference)findPreference("prefDays");
+        /*Preference daysButton = (Preference)findPreference("prefDays");
         daysButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -64,7 +65,7 @@ public class SettingsFragment extends PreferenceFragment {
                 dialogFragment.show(getFragmentManager(), "SetLessonsDayDialog");
                 return true;
             }
-        });
+        });*/
 
 //        Preference subButton = (Preference)findPreference("prefSubmit");
 //        subButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -89,11 +90,32 @@ public class SettingsFragment extends PreferenceFragment {
 //            }
 //        });
 
+        Preference addButton = (Preference)findPreference("prefAddFach");
+        addButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent prefDayIntent = new Intent(getActivity(), PrefDayActivity.class);
+                startActivity(prefDayIntent);
+                return true;
+            }
+        });
+
+        Preference editButton = (Preference)findPreference("prefEditFach");
+        editButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent prefEditIntent = new Intent(getActivity(), ChangeTTActivity.class);
+                startActivity(prefEditIntent);
+                return true;
+            }
+        });
+
         Preference delButton = (Preference)findPreference("prefDel");
         delButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 MainActivity.theActivity.deleteStorageFile("kurskrzl");
+                MainActivity.theActivity.deleteStorageFile("facher.json");
                 Snackbar snackbar = Snackbar.make(getView(), "Alle Fächer gelöscht", Snackbar.LENGTH_SHORT);
                 snackbar.show();
                 return true;

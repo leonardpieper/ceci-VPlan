@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.leonard.ceciVPlan.R;
 
@@ -78,21 +79,26 @@ public class SetLessonsDialog extends DialogFragment{
                         String id = sharedPref.getString("prefId", "");
                         String teacher = sharedPref.getString("prefTeacher", "");
 
+                        String color = sharedPref.getString("prefColor", "");
+
                         //Delete sharedpref (Entries in the Settingsscreen)
                         sharedPref.edit().remove("prefLesson").apply();
                         sharedPref.edit().remove("prefShortcut").apply();
                         sharedPref.edit().remove("prefId").apply();
                         sharedPref.edit().remove("prefTeacher").apply();
+                        sharedPref.edit().remove("prefColor").apply();
 
 //                        ArrayList days = SetLessonsDayDialog.mSelectedItems;
 //                        System.out.println(daysHours.toString());
-                        AddNewLesson.theActivity.addTheLesson(lesson, shortcut, id, teacher, daysHours);
+                        AddNewLesson.theActivity.addTheLesson(lesson, shortcut, id, teacher, daysHours, color);
+                        Toast toast = Toast.makeText(getActivity(), "Fach hinzugefügt", Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 })
                 .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Clicked Abbrechen
+                        SetLessonsDialog.this.getDialog().cancel();
                     }
                 });
 
@@ -119,7 +125,7 @@ public class SetLessonsDialog extends DialogFragment{
         EditText etRoom;
 
         InputFilter[] fArray2 = new InputFilter[1];
-        fArray2[0] = new InputFilter.LengthFilter(2);
+        fArray2[0] = new InputFilter.LengthFilter(1);
         InputFilter[] fArray4 = new InputFilter[1];
         fArray4[0] = new InputFilter.LengthFilter(4);
 

@@ -61,7 +61,25 @@
 
         <activity android:name="com.github.leonardpieper.ceciVPlan.FirstStartActivity" >
         </activity>
-        <activity android:name="com.github.leonardpieper.ceciVPlan.TimetableActivity">
+        <activity
+            android:name="com.github.leonardpieper.ceciVPlan.TimetableActivity_old"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.github.leonardpieper.ceciVPlan.TimeTableActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name="com.github.leonardpieper.ceciVPlan.PrefDayActivity" >
+            <intent-filter>
+                <action android:name="com.github.leoanrdpieper.activities.ceciVPlan" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.github.leonardpieper.ceciVPlan.ChangeTTActivity" >
+        </activity>
+        <activity android:name="com.github.leonardpieper.ceciVPlan.UpdateTTActivity" >
         </activity>
     </application>
 

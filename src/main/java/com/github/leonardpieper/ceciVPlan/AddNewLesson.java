@@ -1,5 +1,8 @@
 package com.github.leonardpieper.ceciVPlan;
 
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +16,7 @@ public class AddNewLesson{
         theActivity = this;
     }
 
-    public static void addTheLesson(String fach, String abk, String fachkrzl, String lehrer, ArrayList detaills) {
+    public static void addTheLesson(String fach, String abk, String fachkrzl, String lehrer, ArrayList detaills, String color) {
         try {
             JSONObject jsoMain = new JSONObject();
             JSONObject jsoFach;
@@ -30,6 +33,7 @@ public class AddNewLesson{
             jsoFach.put("Fachkrzl", fachkrzl);
             MainActivity.theActivity.appendToFile("kurskrzl", fachkrzl);
             jsoFach.put("Lehrer", lehrer);
+            jsoFach.put("Farbe", color);
 
             jsaTage = new JSONArray();
 
@@ -99,7 +103,8 @@ public class AddNewLesson{
     }
 
 
-    /* TODO: Doesn't work! */
+    /* TODO: Doesn't work */
+    /* TODO: Works! */
     private static JSONArray appendToJson(JSONArray jsaFaecher) {
 
         try {

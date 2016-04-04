@@ -73,6 +73,8 @@ public class HelpActivity extends AppCompatActivity {
                 .append("Es wurden Bestandteile aus Open-Source/freier Software verwendet, \n")
                 .append("der FloatingActionButton steht unter der Apache 2.0 Lizenz\n\n")
                 .append("Copyright 2015 futuresimple\n").append("\n")
+                .append("Lobsterpicker Copyright 2015 Lars Werkmann und Marie Schweiz.")
+                .append("Der Lobsterpicker (Farbauswahl) steht unter der Apache 2.0 Lizenz\n\n")
                 .append("Licensed under the Apache License, Version 2.0 (the \"License\");\n")
                 .append("you may not use this file except in compliance with the License.\n")
                 .append("You may obtain a copy of the License at\n").append("\n")

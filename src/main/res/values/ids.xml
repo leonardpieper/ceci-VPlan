@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fachSpinner" type="id"></item>
+    <item name="typeSpinner" type="id"></item>
+    <item name="descriptionET" type="id"></item>
+    <item name="notifySwitch" type="id"></item>
+    <item name="dateBtn" type="id"></item>
+    <item name="timeBtn" type="id"></item>
+    <item name="submitBtn" type="id"></item>
+</resources>

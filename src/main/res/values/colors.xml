@@ -22,4 +22,5 @@
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
     <color name="red_warning">#ff0000</color>
+    <color name="colorBlack">#000000</color>
 </resources>

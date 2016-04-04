@@ -15,7 +15,7 @@
             android:id="@+id/nav_test"
             android:icon="@drawable/ic_school"
             android:title="Klausuren"
-            android:visible="false"/>
+            android:visible="true"/>
     </group>
 
     <item android:title="Einstellungen">

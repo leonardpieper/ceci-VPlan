@@ -26,7 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class TimeTableActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -158,7 +161,15 @@ public class TimeTableActivity extends AppCompatActivity
         TextView tv = (TextView)tableLayout.findViewWithTag("tv" + rowNumber + colNumber);
         tv.setText(fachAbk + "\n" + raum);
         tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-        tv.setTextColor(Color.WHITE);
+
+        int color = new BigInteger(farbe, 16).intValue();
+        if(getBrightness(color)){
+            tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        }else {
+            tv.setTextColor(Color.WHITE);
+        }
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             tv.setBackground(bgColor(farbe));
         } else {
@@ -194,8 +205,24 @@ public class TimeTableActivity extends AppCompatActivity
         gd.setShape(GradientDrawable.RECTANGLE);
         gd.setColor(color);
         gd.setStroke(3, getResources().getColor(R.color.colorPrimary));
-
-
         return gd;
     }
+
+    private boolean getBrightness(int color){
+
+        int[] rgb = {Color.red(color), Color.green(color), Color.blue(color)};
+
+        int brightness = (int) Math.sqrt(rgb[0] * rgb[0] * .241 + rgb[1] * rgb[1] * .691 + rgb[2] * rgb[2] * .068);
+
+        //color is light
+        if(brightness >= 200){
+            return true;
+        }else {
+            return false;
+        }
+
+
+
+    }
+
 }

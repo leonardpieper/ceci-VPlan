@@ -132,6 +132,7 @@ public class UpdateTTActivity extends AppCompatActivity {
                     JSONObject joFach = jaFacher.getJSONObject(i);
                     String valueFach = joFach.getString("Fach");
                     if (valueFach.equals(fach)) {
+                        //TODO: Only API-19
                         jaFacher.remove(i);
                     }
                 }

@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -69,10 +70,15 @@ public class SinginActivity extends AsyncTask<String, Void, String> {
              * Öffnet URL
              */
             URL u = new URL("http://ceciliengymnasium.de/index.php/vertretungsplan");
-            URLConnection ucon = u.openConnection();
+            HttpURLConnection ucon = (HttpURLConnection) u.openConnection();
+            /*System.setProperty("http.agent", "Chrome");
+            ucon.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");*/
             Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
             Matcher m = p.matcher(ucon.getContentType());
             //Matcher m = p.matcher("application/x-www-form-urlencoded");
+
+            int status = ucon.getResponseCode();
+            System.err.println(status);
 
             String charset = m.matches() ? m.group(1) : "UTF-8";
             Reader r = new InputStreamReader(ucon.getInputStream(), charset);
@@ -135,7 +141,7 @@ public class SinginActivity extends AsyncTask<String, Void, String> {
             /**
              * Sammelt alle Daten für das HTML-Form
              */
-            String host = "http://ceciliengymnasium.de/index.php/vertretungsplan?tmpl=component";
+            String host = "http://ceciliengymnasium.de/index.php/vertretungsplan";
             String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
             //data += "&" + URLEncoder.encode("checkbox", "UTF-8") + "=" + URLEncoder.encode("yes", "UTF-8");

@@ -81,6 +81,8 @@
         </activity>
         <activity android:name="com.github.leonardpieper.ceciVPlan.UpdateTTActivity" >
         </activity>
+        <activity android:name="com.github.leonardpieper.ceciVPlan.AddExamActivity" >
+        </activity>
     </application>
 
 </manifest>

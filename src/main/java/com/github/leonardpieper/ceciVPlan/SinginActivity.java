@@ -71,7 +71,7 @@ public class SinginActivity extends AsyncTask<String, Void, String> {
              */
             URL u = new URL("http://ceciliengymnasium.de/index.php/vertretungsplan");
             HttpURLConnection ucon = (HttpURLConnection) u.openConnection();
-            /*System.setProperty("http.agent", "Chrome");
+            /*System.setProperty("http.agent", "Chrome");/*
             ucon.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");*/
             Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
             Matcher m = p.matcher(ucon.getContentType());
@@ -81,7 +81,11 @@ public class SinginActivity extends AsyncTask<String, Void, String> {
             System.err.println(status);
 
             String charset = m.matches() ? m.group(1) : "UTF-8";
-            Reader r = new InputStreamReader(ucon.getInputStream(), charset);
+            /**
+             * Zu getErrorStream geändert, weil die URL einen HTTP 403 Status Code ausgibt
+             * Wenn das nicht mehr funktioniert getInputStream verwenden!
+             */
+            Reader r = new InputStreamReader(ucon.getErrorStream(), charset);
             StringBuilder buf = new StringBuilder();
             while (true) {
                 int ch = r.read();

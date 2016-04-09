@@ -11,6 +11,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -93,6 +94,8 @@ public class SetLessonsDialog extends DialogFragment{
                         AddNewLesson.theActivity.addTheLesson(lesson, shortcut, id, teacher, daysHours, color);
                         Toast toast = Toast.makeText(getActivity(), "Fach hinzugefügt", Toast.LENGTH_SHORT);
                         toast.show();
+                        PrefDayActivity.theActivity.finish();
+
                     }
                 })
                 .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
@@ -154,20 +157,29 @@ public class SetLessonsDialog extends DialogFragment{
             et1 = new EditText(getActivity());
             et1.setInputType(InputType.TYPE_CLASS_NUMBER);
             et1.setFilters(fArray2);
+            et1.setMinWidth(50);
             et1.setId(1 + (index * 10));
+            et1.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+            et1.setNextFocusForwardId(2 + (index * 10));
 
             wt.et1 = et1;
 
             et2 = new EditText(getActivity());
             et2.setInputType(InputType.TYPE_CLASS_NUMBER);
             et2.setFilters(fArray2);
+            et2.setMinWidth(50);
             et2.setId(2 + (index * 10));
+            et2.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+            et2.setNextFocusForwardId(3+ (index*10));
             wt.et2 = et2;
 
             et3 = new EditText(getActivity());
             et3.setInputType(InputType.TYPE_CLASS_NUMBER);
             et3.setFilters(fArray2);
+            et3.setMinWidth(50);
             et3.setId(3 + (index * 10));
+            et3.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+            et3.setNextFocusForwardId( 4 + (index*10));
             wt.et3 = et3;
 
             TextView tvRoom = new TextView(getActivity());
@@ -177,11 +189,15 @@ public class SetLessonsDialog extends DialogFragment{
 
 
             etRoom  = new EditText(getActivity());
-            etRoom.setPadding(40, 0, 40, 40);
-            etRoom.setEms(3);
+//            etRoom.setPadding(0, 0, 0, 0);
+//            etRoom.setEms(3);
             etRoom.setFilters(fArray4);
             etRoom.setSingleLine(true);
+            etRoom.setMinWidth(150);
+            etRoom.setGravity(Gravity.LEFT | Gravity.BOTTOM);
             etRoom.setId(4 + (index * 10));
+            etRoom.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+            etRoom.setNextFocusForwardId(1 + ((index + 1) *10));
             wt.etRoom = etRoom;
 
             LinearLayout row = new LinearLayout(getActivity());

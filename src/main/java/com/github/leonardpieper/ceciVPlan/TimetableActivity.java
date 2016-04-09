@@ -89,20 +89,25 @@ public class TimeTableActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_vplan:
-                this.finish();
+                Intent intent = new Intent(TimeTableActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.nav_schedule:
                 break;
             case R.id.nav_test:
                 Intent examsIntent = new Intent(this, ExamsActivity.class);
+                examsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(examsIntent);
                 break;
             case R.id.nav_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                settingsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(settingsIntent);
                 break;
             case R.id.nav_help:
                 Intent helpIntent = new Intent(this, HelpActivity.class);
+                helpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(helpIntent);
                 break;
         }
@@ -162,11 +167,15 @@ public class TimeTableActivity extends AppCompatActivity
         tv.setText(fachAbk + "\n" + raum);
         tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
-        int color = new BigInteger(farbe, 16).intValue();
-        if(getBrightness(color)){
-            tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        if(!farbe.isEmpty() && farbe != null) {
+            int color = new BigInteger(farbe, 16).intValue();
+            if (getBrightness(color)) {
+                tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+            } else {
+                tv.setTextColor(Color.WHITE);
+            }
         }else {
-            tv.setTextColor(Color.WHITE);
+            tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         }
 
 
@@ -194,7 +203,7 @@ public class TimeTableActivity extends AppCompatActivity
 
     private GradientDrawable bgColor(String farbe){
         int color;
-        if(!farbe.isEmpty()){
+        if(!farbe.isEmpty() && farbe != null){
             farbe = "#" + farbe;
             color = Color.parseColor(farbe);
         }else {

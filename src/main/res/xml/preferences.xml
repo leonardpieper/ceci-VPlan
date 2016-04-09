@@ -3,32 +3,35 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory
         android:title="Anmeldung" >
-        <PreferenceScreen
+        <!--<PreferenceScreen-->
+            <!--android:title="Login"-->
+            <!--android:summary="Login mit den Anmeldedaten des Online-Vertretungsplans"-->
+            <!--android:key="prefLoginScreen">-->
+            <!--<EditTextPreference-->
+                <!--android:title="Benutzername"-->
+                <!--android:key="prefUname">-->
+            <!--</EditTextPreference>-->
+            <!--<EditTextPreference-->
+                <!--android:title="Passwort"-->
+                <!--android:inputType="textPassword"-->
+                <!--android:key="prefPwd">-->
+            <!--</EditTextPreference>-->
+            <!--<Preference-->
+                <!--android:title="Login"-->
+                <!--android:summary="Anmeldung bestätigen"-->
+                <!--android:key="prefLogin">-->
+            <!--</Preference>-->
+        <!--</PreferenceScreen>-->
+        <Preference
             android:title="Login"
-            android:summary="Login mit den Anmeldedaten des Online-Vertretungsplans"
-            android:key="prefLoginScreen">
-            <EditTextPreference
-                android:title="Benutzername"
-                android:key="prefUname">
-            </EditTextPreference>
-            <EditTextPreference
-                android:title="Passwort"
-                android:inputType="textPassword"
-                android:key="prefPwd">
-            </EditTextPreference>
-            <Preference
-                android:title="Login"
-                android:summary="Anmeldung bestätigen"
-                android:key="prefLogin">
-            </Preference>
-        </PreferenceScreen>
-        <ListPreference
-            android:title="Jahrgang"
-            android:summary="Dein Jahrgang"
-            android:key="prefYear"
-            android:entries="@array/defaultYears"
-            android:entryValues="@array/defaultYears">
-        </ListPreference>
+            android:key="prefLogin"></Preference>
+        <!--<ListPreference-->
+            <!--android:title="Jahrgang"-->
+            <!--android:summary="Dein Jahrgang"-->
+            <!--android:key="prefYear"-->
+            <!--android:entries="@array/defaultYears"-->
+            <!--android:entryValues="@array/defaultYears">-->
+        <!--</ListPreference>-->
         <SwitchPreference
             android:title="Personalisierter Vertretungsplan"
             android:summary="Hinweis: Hierfür musst du deine Kurse hinzufügen"

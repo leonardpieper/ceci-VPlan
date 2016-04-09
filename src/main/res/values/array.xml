@@ -9,9 +9,9 @@
         <item>"Keine Fächer vorhanden"</item>
     </string-array>
     <string-array name="examTypes">
+        <item>"Hausaufgabe"</item>
         <item>"Klausur"</item>
         <item>"Mündl. Prüfung"</item>
-        <item>"Hausaufgabe"</item>
         <item>"Test"</item>
         <item>"Sonstiges"</item>
     </string-array>

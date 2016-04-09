@@ -44,15 +44,15 @@ public class SettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.preferences);
 
         //Login-Button
-        Preference loginButton = (Preference)findPreference("prefLogin");
+        final Preference loginButton = (Preference)findPreference("prefLogin");
         loginButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SettingsActivity.theActivity.prefLogin();
-                Toast toast = Toast.makeText(getActivity(), "Anmeldung eingegangen\nBitte warten..", Toast.LENGTH_LONG);
-                toast.show();
-//                Snackbar snackbar = Snackbar.make(getView(), "Füge Fächer hinzu, um deinen persönlichen Vertretungsplan zu sehen.", Snackbar.LENGTH_LONG);
-//                snackbar.show();
+//                SettingsActivity.theActivity.prefLogin();
+//                Toast toast = Toast.makeText(getActivity(), "Anmeldung eingegangen\nBitte warten..", Toast.LENGTH_LONG);
+//                toast.show();
+                Intent logIntent = new Intent(getActivity(), LogginActivity.class);
+                startActivity(logIntent);
                 return true;
             }
         });

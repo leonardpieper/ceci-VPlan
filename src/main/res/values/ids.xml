@@ -7,4 +7,7 @@
     <item name="dateBtn" type="id"></item>
     <item name="timeBtn" type="id"></item>
     <item name="submitBtn" type="id"></item>
+
+    <item name="examDateTV" type="id"></item>
+    <item name="examDescTV" type="id"></item>
 </resources>

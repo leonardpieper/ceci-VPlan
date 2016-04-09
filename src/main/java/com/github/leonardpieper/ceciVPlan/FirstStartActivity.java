@@ -28,6 +28,8 @@ public class FirstStartActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
 //                startActivity(mainIntent);
+                Intent logInIntent = new Intent(getApplicationContext(), LogginActivity.class);
+                startActivity(logInIntent);
                 finish();
 
             }

@@ -15,6 +15,9 @@ import com.larswerkman.lobsterpicker.sliders.LobsterShadeSlider;
 
 public class PrefDayActivity extends AppCompatActivity {
 
+    public static PrefDayActivity theActivity;
+    public PrefDayActivity(){theActivity=this;}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,4 +58,5 @@ public class PrefDayActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -133,6 +133,11 @@ public class MainActivity extends AppCompatActivity
         loadVPlan(defaultYear, personal);
         loadVPlan(defaultYear + 3, personal);
         changeFabColor(3);
+
+        if(tableLayout.getChildCount()==0){
+            TextView tvNotLoggedIn = (TextView)findViewById(R.id.notLoggedIn);
+            tvNotLoggedIn.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -221,6 +226,7 @@ public class MainActivity extends AppCompatActivity
         String loadedUsername = readFromFile("uname");
         String loadedPassword = readFromFile("pwd");
         saveVPlan(loadedUsername, loadedPassword);
+
     }
 
     /**
@@ -347,6 +353,20 @@ public class MainActivity extends AppCompatActivity
                 JSONArray stufe = mainObject.getJSONArray(jahrgang);
 //                    analyzedJSON = analyzeJSON(stufe, i, 0);
                 analyzeJSON(stufe, year, personal);
+
+                //To show the notLoggedIn Textview
+                if(tableLayout.getChildCount()==0){
+                    TextView tvNotLoggedIn = (TextView)findViewById(R.id.notLoggedIn);
+                    tvNotLoggedIn.setVisibility(View.VISIBLE);
+                }else if (tableLayout.getChildCount()==1) {
+                    TextView tvNotLoggedIn = (TextView) findViewById(R.id.notLoggedIn);
+                    tvNotLoggedIn.setVisibility(View.VISIBLE);
+                    tvNotLoggedIn.setText("Füge deine Fächer für den personalisierten Vertretungsplan hinzu!");
+                }
+                else {
+                    TextView tvNotLoggedIn = (TextView) findViewById(R.id.notLoggedIn);
+                    tvNotLoggedIn.setVisibility(View.GONE);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

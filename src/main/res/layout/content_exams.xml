@@ -6,54 +6,79 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
+    android:paddingLeft="@dimen/cardview_compat_inset_shadow"
+    android:paddingRight="@dimen/cardview_compat_inset_shadow"
+    android:paddingTop="@dimen/cardview_compat_inset_shadow"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.github.leonardpieper.ceciVPlan.TimeTableActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        card_view:cardBackgroundColor="#B2DFDB">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/examLayout">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:textSize="20sp"
-                android:text="Deutsch" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvTest"
+                android:text="Keine Aufgaben oder Klausuren\nNeue Aufgabe mit Klick auf das + hinzufügen"
+                android:gravity="center"
                 android:textSize="16sp"
-                android:layout_alignParentRight="true"
-                android:text="Mo 22.4." />
+                android:layout_marginTop="16dp"
+                android:id="@+id/noExams"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:id="@+id/tvTest1"
-                android:layout_below="@+id/tvTest"
-                android:text="Text Text Text Text Text Text"
-                android:textSize="14sp" />
+            <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="16dp"-->
+                <!--card_view:cardBackgroundColor="#B2DFDB">-->
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvTest1"
-                android:layout_alignParentRight="true"
-                android:text="Erledigt" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent">-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="100dp"-->
+                        <!--android:src="@drawable/square"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:text="Deutsch"-->
+                        <!--android:textSize="20sp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvTest"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:text="Mo 22.4."-->
+                        <!--android:textSize="16sp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvTest1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/tvTest"-->
+                        <!--android:gravity="left"-->
+                        <!--android:text="Text Text Text Text Text Text"-->
+                        <!--android:textSize="14sp" />-->
+
+                    <!--<Button-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_below="@id/tvTest1"-->
+                        <!--android:text="Erledigt" />-->
+                <!--</RelativeLayout>-->
+            <!--</android.support.v7.widget.CardView>-->
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

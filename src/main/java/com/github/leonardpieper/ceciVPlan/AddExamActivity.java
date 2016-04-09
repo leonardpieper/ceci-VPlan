@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.leonard.ceciVPlan.R;
 
@@ -25,8 +26,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 public class AddExamActivity extends AppCompatActivity {
+
+    private Spinner lessonSpinner;
+    private Spinner typeSpinner;
+    private EditText descriptionET;
+    private Switch notifySwitch;
+    private Button dateBtn;
+    private Button timeBtn;
+    private Button submitBtn;
+
+    private final Calendar changedCal = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,19 +93,19 @@ public class AddExamActivity extends AppCompatActivity {
         btn3Param.setMargins(0, 20, 0, 0);
 
 
-        Spinner typeSpinner = new Spinner(this);
+        typeSpinner = new Spinner(this);
         typeSpinner.setLayoutParams(typeParam);
         typeSpinner.setAdapter(typeArrayAdapter);
         typeSpinner.setId(R.id.typeSpinner);
 
 
-        EditText descriptionET = new EditText(this);
+        descriptionET = new EditText(this);
         descriptionET.setLayoutParams(etParam);
         descriptionET.setId(R.id.descriptionET);
         descriptionET.setHint("Beschreibung");
 
 
-        Switch notifySwitch = new Switch(this);
+        notifySwitch = new Switch(this);
         notifySwitch.setLayoutParams(switchParam);
         notifySwitch.setText("Erinnerung  ");
         notifySwitch.setTextColor(getResources().getColor(R.color.colorBlack));
@@ -102,10 +114,8 @@ public class AddExamActivity extends AppCompatActivity {
         notifySwitch.setChecked(false);
 
 
-        final Calendar changedCal = Calendar.getInstance();
 
-
-        Button dateBtn = new Button(this);
+        dateBtn = new Button(this);
         dateBtn.setLayoutParams(btn1Param);
         dateBtn.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         dateBtn.setBackgroundResource(R.drawable.stroke);
@@ -129,7 +139,7 @@ public class AddExamActivity extends AppCompatActivity {
         });
 
 
-        Button timeBtn = new Button(this);
+        timeBtn = new Button(this);
         timeBtn.setLayoutParams(btn2Param);
         timeBtn.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         timeBtn.setBackgroundResource(R.drawable.stroke);
@@ -148,15 +158,27 @@ public class AddExamActivity extends AppCompatActivity {
             }
         });
 
+        //TODO:Add Notification
+        notifySwitch.setVisibility(View.GONE);
+        timeBtn.setVisibility(View.GONE);
 
-        Button submitBtn = new Button(this);
+
+        submitBtn = new Button(this);
         submitBtn.setLayoutParams(btn3Param);
         submitBtn.setBackgroundResource(R.drawable.stroke);
         submitBtn.setId(R.id.submitBtn);
         submitBtn.setText("Speichern");
         submitBtn.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         submitBtn.setTextColor(getResources().getColor(R.color.colorAccent));
-
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveData();
+                finish();
+                Toast toast = Toast.makeText(AddExamActivity.this, "Aufgabe hinzugefügt", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
 
         rLayout.addView(typeSpinner);
@@ -177,7 +199,7 @@ public class AddExamActivity extends AppCompatActivity {
         firstParam.addRule(RelativeLayout.ALIGN_PARENT_START);
         firstParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
-        Spinner lessonSpinner = new Spinner(this);
+        lessonSpinner = new Spinner(this);
 
         String rawData = new String();
         if (MainActivity.theActivity.readFromFile("facher.json") != null) {
@@ -213,4 +235,74 @@ public class AddExamActivity extends AppCompatActivity {
         rLayout.addView(lessonSpinner);
 
     }
+
+    private void saveData() {
+        //TODO: Method
+        JSONObject root = new JSONObject();
+        JSONArray jaExams = new JSONArray();
+        JSONObject joExam = new JSONObject();
+
+        try {
+            if(lessonSpinner.getSelectedItem()==null){
+                joExam.put("Fach", "");
+            }else{
+                joExam.put("Fach", lessonSpinner.getSelectedItem().toString());
+            }
+            joExam.put("Typ", typeSpinner.getSelectedItem().toString());
+            joExam.put("Beschreibung", descriptionET.getText());
+            joExam.put("Erinnerung", notifySwitch.isChecked());
+            joExam.put("Tag", changedCal.get(Calendar.DAY_OF_MONTH));
+            joExam.put("Monat", changedCal.get(Calendar.MONTH));
+            joExam.put("Stunde", changedCal.get(Calendar.HOUR_OF_DAY));
+            joExam.put("Minute", changedCal.get(Calendar.MINUTE));
+            joExam.put("UUID", UUID.randomUUID().toString());
+
+            jaExams.put(joExam);
+
+
+            if (MainActivity.theActivity.readFromFile("ha.json") == null) {
+                root.put("Aufgaben", jaExams);
+                String jsonData = new String();
+                jsonData = root.toString();
+                MainActivity.theActivity.writeToFile("ha.json", jsonData);
+            } else {
+                root.put("Aufgaben", appendToJson(jaExams));
+                String jsonData = new String();
+                jsonData = root.toString();
+//                System.out.println(jsonData);
+                MainActivity.theActivity.writeToFile("ha.json", jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static JSONArray appendToJson(JSONArray jaExams) {
+
+        try {
+
+            JSONObject rawData = new JSONObject(MainActivity.theActivity.readFromFile("ha.json"));
+            //Get the instance of JSONArray that contains JSONObjects
+            JSONArray jsonArray = rawData.optJSONArray("Aufgaben");
+            JSONArray newJsonArray = new JSONArray();
+            newJsonArray = concatArray(jsonArray, jaExams);
+            return newJsonArray;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static JSONArray concatArray(JSONArray... arrs)
+            throws JSONException {
+        JSONArray result = new JSONArray();
+        for (JSONArray arr : arrs) {
+            for (int i = 0; i < arr.length(); i++) {
+                result.put(arr.get(i));
+            }
+        }
+        return result;
+    }
+
 }

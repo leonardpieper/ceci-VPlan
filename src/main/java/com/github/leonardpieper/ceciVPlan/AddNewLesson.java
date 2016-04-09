@@ -92,6 +92,7 @@ public class AddNewLesson{
                 MainActivity.theActivity.writeToFile("facher.json", jsonData);
             }
 
+
 //            System.out.println(jsoMain);
 
             //write String to file
